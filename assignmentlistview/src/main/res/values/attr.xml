@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Assignment List View -->
+    <declare-styleable name="AssignmentListView">
+    </declare-styleable>
+
+    <attr name="samuraiAssignmentListView" format="reference" />
+</resources>
