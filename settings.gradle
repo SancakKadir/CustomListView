@@ -1,2 +1,3 @@
 rootProject.name = "Custom List View"
 include ':app'
+include ':assignmentlistview'
