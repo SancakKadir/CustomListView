@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <com.example.assignmentlistview.ui.image.SamuraiImageView
         android:id="@+id/ivAssignment"
         android:layout_width="200dp"
         android:layout_height="200dp"

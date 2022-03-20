@@ -1,4 +1,4 @@
-package com.example.assignmentlistview.ui.assignmentlistview
+package com.example.assignmentlistview.ui.list
 
 import android.content.Context
 import android.util.AttributeSet
@@ -17,17 +17,7 @@ class AssignmentList @JvmOverloads constructor(
     private val assignmentListAdapter = AssignmentListAdapter()
 
     init {
-        obtainStyledAttributes(attrs, defStyleAttr)
         adapter = assignmentListAdapter
-    }
-
-    private fun obtainStyledAttributes(attrs: AttributeSet?, defStyleAttr: Int) {
-        val typedArray = context.theme.obtainStyledAttributes(
-            attrs,
-            R.styleable.AssignmentListView,
-            defStyleAttr,
-            0
-        )
     }
 
     override fun setup(items: List<ItemEntity>) {

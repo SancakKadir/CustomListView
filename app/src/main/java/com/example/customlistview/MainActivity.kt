@@ -2,7 +2,7 @@ package com.example.customlistview
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.assignmentlistview.ui.assignmentlistview.AssignmentList
+import com.example.assignmentlistview.ui.list.AssignmentList
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

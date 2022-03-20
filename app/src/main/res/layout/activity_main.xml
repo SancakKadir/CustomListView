@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.example.assignmentlistview.ui.assignmentlistview.AssignmentList
+    <com.example.assignmentlistview.ui.list.AssignmentList
         android:id="@+id/assignment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

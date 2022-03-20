@@ -1,12 +1,11 @@
-package com.example.assignmentlistview.ui.assignmentlistview
+package com.example.assignmentlistview.ui.list
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import com.bumptech.glide.Glide
 import com.example.assignmentlistview.R
 import com.example.assignmentlistview.core.adapter.DefaultItemAdapter
+import com.example.assignmentlistview.ui.image.SamuraiImageView
 
 
 class AssignmentListAdapter : DefaultItemAdapter<AssignmentList.ItemEntity>() {
@@ -21,7 +20,8 @@ class AssignmentListAdapter : DefaultItemAdapter<AssignmentList.ItemEntity>() {
                 .inflate(R.layout.item_component_assignment_list, parent, false)
 
             viewHolder = ItemViewHolder()
-            viewHolder.imageView = itemView.findViewById<View>(R.id.ivAssignment) as ImageView
+            viewHolder.imageView =
+                itemView.findViewById<View>(R.id.ivAssignment) as SamuraiImageView
 
             itemView.tag = viewHolder
         } else {
@@ -29,16 +29,12 @@ class AssignmentListAdapter : DefaultItemAdapter<AssignmentList.ItemEntity>() {
             viewHolder = convertView.tag as ItemViewHolder
         }
 
-        Glide.with(viewHolder.imageView.context)
-            .load(item.imageUrl)
-            .placeholder(R.drawable.ic_place_holder)
-            .into(viewHolder.imageView)
-
+        viewHolder.imageView.loadImage(item.imageUrl)
 
         return itemView
     }
 
     private class ItemViewHolder {
-        lateinit var imageView: ImageView
+        lateinit var imageView: SamuraiImageView
     }
 }
