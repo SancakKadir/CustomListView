@@ -4,17 +4,21 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.ListView
 import com.example.assignmentlistview.R
-import com.example.assignmentlistview.core.SamuraiListView
+import com.example.assignmentlistview.core.component.SamuraiListComponent
 import com.example.assignmentlistview.core.entity.ViewEntity
 
-class AssignmentListView @JvmOverloads constructor(
+class AssignmentList @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.samuraiAssignmentListView
-) : ListView(context, attrs, defStyleAttr), SamuraiListView<AssignmentListView.ItemEntity> {
+) : ListView(context, attrs, defStyleAttr),
+    SamuraiListComponent<AssignmentList.ItemEntity> {
+
+    private val assignmentListAdapter = AssignmentListAdapter()
 
     init {
         obtainStyledAttributes(attrs, defStyleAttr)
+        adapter = assignmentListAdapter
     }
 
     private fun obtainStyledAttributes(attrs: AttributeSet?, defStyleAttr: Int) {
@@ -26,8 +30,8 @@ class AssignmentListView @JvmOverloads constructor(
         )
     }
 
-    override fun setup(items: List<ItemEntity>?) {
-        TODO("Not yet implemented")
+    override fun setup(items: List<ItemEntity>) {
+        assignmentListAdapter.updateItems(items)
     }
 
     data class ItemEntity(
