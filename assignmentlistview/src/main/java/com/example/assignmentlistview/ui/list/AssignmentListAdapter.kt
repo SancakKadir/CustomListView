@@ -20,8 +20,7 @@ class AssignmentListAdapter : DefaultItemAdapter<AssignmentList.ItemEntity>() {
                 .inflate(R.layout.item_component_assignment_list, parent, false)
 
             viewHolder = ItemViewHolder()
-            viewHolder.imageView =
-                itemView.findViewById<View>(R.id.ivAssignment) as SamuraiImageView
+            viewHolder.imageView = itemView.findViewById<View>(R.id.ivAssignment) as SamuraiImageView
 
             itemView.tag = viewHolder
         } else {
@@ -29,7 +28,7 @@ class AssignmentListAdapter : DefaultItemAdapter<AssignmentList.ItemEntity>() {
             viewHolder = convertView.tag as ItemViewHolder
         }
 
-        viewHolder.imageView.loadImage(item.imageUrl)
+            viewHolder.imageView.loadImage(item.imageUrl)
 
         return itemView
     }
