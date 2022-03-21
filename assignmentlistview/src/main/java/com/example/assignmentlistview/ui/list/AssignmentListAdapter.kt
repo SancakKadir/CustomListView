@@ -1,6 +1,5 @@
 package com.example.assignmentlistview.ui.list
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,8 @@ import com.example.assignmentlistview.network.LoggingInterceptor
 import com.example.assignmentlistview.ui.image.SamuraiImageView
 import okhttp3.*
 import java.io.IOException
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 
@@ -34,7 +35,13 @@ internal class AssignmentListAdapter : DefaultItemAdapter<AssignmentList.ItemEnt
             viewHolder = convertView.tag as ItemViewHolder
         }
 
+        bind(viewHolder, item)
 
+
+        return itemView
+    }
+
+    private fun bind(viewHolder: ItemViewHolder, item: AssignmentList.ItemEntity) {
         viewHolder.imageView.loadImage(item.imageUrl)
         viewHolder.imageView.onImageLoadingTimeChange = {
             item.apply {
@@ -44,8 +51,6 @@ internal class AssignmentListAdapter : DefaultItemAdapter<AssignmentList.ItemEnt
                 trackImageLoadingTimes()
             }
         }
-
-        return itemView
     }
 
     private class ItemViewHolder {
@@ -76,15 +81,19 @@ internal class AssignmentListAdapter : DefaultItemAdapter<AssignmentList.ItemEnt
             .post(requestBody)
             .build()
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                //no-op
-            }
 
-            override fun onResponse(call: Call, response: Response) {
-                Log.d("TAG", "onResponse: succeed")
-            }
-        })
+        val executor: ExecutorService = Executors.newSingleThreadExecutor()
+        executor.execute {
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    //no-op
+                }
+                override fun onResponse(call: Call, response: Response) {
+                    //no-op
+                }
+            })
+        }
+
     }
 
     companion object {
