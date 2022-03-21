@@ -27,15 +27,6 @@ dependencies {
 }
 ```
 
-**Example**:
-
-    -In Layout
-
-    <com.example.assignmentlistview.ui.list.AssignmentList
-        android:id="@+id/assignmentImageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-        
-    -Setup
+**Setup**:
     
     assignmentImageViews.setup(listOf(AssignmentListView.ItemEntity("url")))
