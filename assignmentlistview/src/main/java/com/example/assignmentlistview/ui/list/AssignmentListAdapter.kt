@@ -1,11 +1,16 @@
 package com.example.assignmentlistview.ui.list
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.assignmentlistview.R
 import com.example.assignmentlistview.core.adapter.DefaultItemAdapter
+import com.example.assignmentlistview.network.LoggingInterceptor
 import com.example.assignmentlistview.ui.image.SamuraiImageView
+import okhttp3.*
+import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 
 internal class AssignmentListAdapter : DefaultItemAdapter<AssignmentList.ItemEntity>() {
@@ -29,11 +34,14 @@ internal class AssignmentListAdapter : DefaultItemAdapter<AssignmentList.ItemEnt
             viewHolder = convertView.tag as ItemViewHolder
         }
 
-        viewHolder.imageView.loadImage(item.imageUrl)
 
+        viewHolder.imageView.loadImage(item.imageUrl)
         viewHolder.imageView.onImageLoadingTimeChange = {
             item.apply {
                 attributes.putLong(IMAGE_LOAD_TIME, it)
+            }
+            if (items.all { it.attributes.get(IMAGE_LOAD_TIME) != null }) {
+                trackImageLoadingTimes()
             }
         }
 
@@ -44,7 +52,42 @@ internal class AssignmentListAdapter : DefaultItemAdapter<AssignmentList.ItemEnt
         lateinit var imageView: SamuraiImageView
     }
 
+    private fun trackImageLoadingTimes() {
+        val client: OkHttpClient = OkHttpClient.Builder()
+            .connectTimeout(20, TimeUnit.SECONDS)
+            .addInterceptor(LoggingInterceptor())
+            .readTimeout(20, TimeUnit.SECONDS)
+            .writeTimeout(20, TimeUnit.SECONDS)
+            .build()
+
+        val formBody = FormBody
+            .Builder()
+
+        items.forEach { item ->
+            val loadTime = item.attributes.getLong(IMAGE_LOAD_TIME).toString()
+            formBody.add(item.imageUrl, loadTime)
+        }
+
+        val requestBody: RequestBody = formBody
+            .build()
+
+        val request: Request = Request.Builder()
+            .url("https://httpbin.org/")
+            .post(requestBody)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                //no-op
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                Log.d("TAG", "onResponse: succeed")
+            }
+        })
+    }
+
     companion object {
-        const val IMAGE_LOAD_TIME = "image_load_ime"
+        const val IMAGE_LOAD_TIME = "image_load_time"
     }
 }
