@@ -3,7 +3,7 @@ package com.example.assignmentlistview.core.adapter
 import android.widget.BaseAdapter
 import com.example.assignmentlistview.core.entity.ViewEntity
 
-abstract class DefaultItemAdapter<T : ViewEntity>() : BaseAdapter(), ItemAdapter<T> {
+internal abstract class DefaultItemAdapter<T : ViewEntity>() : BaseAdapter(), ItemAdapter<T> {
 
     override var items: List<T> = listOf()
 

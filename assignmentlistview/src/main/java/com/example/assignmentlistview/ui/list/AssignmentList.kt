@@ -7,7 +7,7 @@ import com.example.assignmentlistview.R
 import com.example.assignmentlistview.core.component.SamuraiListComponent
 import com.example.assignmentlistview.core.entity.ViewEntity
 
-class AssignmentList @JvmOverloads constructor(
+public class AssignmentList @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.samuraiAssignmentListView
@@ -24,7 +24,7 @@ class AssignmentList @JvmOverloads constructor(
         assignmentListAdapter.updateItems(items)
     }
 
-    data class ItemEntity(
+    public data class ItemEntity(
         val imageUrl: String
     ) : ViewEntity()
 }

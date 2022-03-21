@@ -2,7 +2,7 @@ package com.example.assignmentlistview.core.adapter
 
 import com.example.assignmentlistview.core.entity.ViewEntity
 
-interface ItemAdapter<T : ViewEntity> {
+internal interface ItemAdapter<T : ViewEntity> {
 
     var items: List<T>
 

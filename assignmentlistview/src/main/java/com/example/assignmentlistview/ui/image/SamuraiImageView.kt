@@ -12,7 +12,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.example.assignmentlistview.R
 import java.lang.Exception
 
-class SamuraiImageView @JvmOverloads constructor(
+internal class SamuraiImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.samuraiImageView
@@ -32,9 +32,12 @@ class SamuraiImageView @JvmOverloads constructor(
         get() = _imageLoadTime
         set(value) {
             _imageLoadTime = value
-
+            onImageLoadingTimeChange?.invoke(value)
             logImageLoadingTime()
         }
+
+    //listener
+    var onImageLoadingTimeChange: ((Long) -> Unit)? = null
 
     init {
         obtainStyledAttributes(attrs, defStyleAttr)

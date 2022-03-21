@@ -8,7 +8,7 @@ import com.example.assignmentlistview.core.adapter.DefaultItemAdapter
 import com.example.assignmentlistview.ui.image.SamuraiImageView
 
 
-class AssignmentListAdapter : DefaultItemAdapter<AssignmentList.ItemEntity>() {
+internal class AssignmentListAdapter : DefaultItemAdapter<AssignmentList.ItemEntity>() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val itemView: View
@@ -31,10 +31,20 @@ class AssignmentListAdapter : DefaultItemAdapter<AssignmentList.ItemEntity>() {
 
         viewHolder.imageView.loadImage(item.imageUrl)
 
+        viewHolder.imageView.onImageLoadingTimeChange = {
+            item.apply {
+                attributes.putLong(IMAGE_LOAD_TIME, it)
+            }
+        }
+
         return itemView
     }
 
     private class ItemViewHolder {
         lateinit var imageView: SamuraiImageView
+    }
+
+    companion object {
+        const val IMAGE_LOAD_TIME = "image_load_ime"
     }
 }
