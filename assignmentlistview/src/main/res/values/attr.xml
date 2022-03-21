@@ -2,6 +2,7 @@
 <resources>
     <!-- Samurai Image View-->
     <declare-styleable name="SamuraiImageView">
+        <attr name="isLoadingTimeLoggingEnabled" format="boolean" />
     </declare-styleable>
 
     <attr name="samuraiAssignmentListView" format="reference" />

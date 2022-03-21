@@ -22,11 +22,19 @@ internal class SamuraiImageView @JvmOverloads constructor(
 
     private val cacheString = DiskCacheStrategy.AUTOMATIC
 
-    private var _imageLoadTime: Long = INVALID_TIME
-
     private var imageRequestTime: Long = INVALID_TIME
 
     private var imageResource: String? = null
+
+    private var _imageLoadTime: Long = INVALID_TIME
+
+    private var _isLoadingTimeLoggingEnabled: Boolean = true
+
+    var isLoadingTimeLoggingEnabled: Boolean
+        get() = _isLoadingTimeLoggingEnabled
+        set(value) {
+            _isLoadingTimeLoggingEnabled = value
+        }
 
     var imageLoadingTime: Long
         get() = _imageLoadTime
@@ -52,7 +60,9 @@ internal class SamuraiImageView @JvmOverloads constructor(
         )
 
         try {
-            //no-op
+            isLoadingTimeLoggingEnabled = typedArray.getBoolean(
+                R.styleable.SamuraiImageView_isLoadingTimeLoggingEnabled, true
+            )
         } catch (e: Exception) {
             // ignored
         } finally {
@@ -97,13 +107,18 @@ internal class SamuraiImageView @JvmOverloads constructor(
     }
 
     private fun logImageLoadingTime() {
-        if (_imageLoadTime == INVALID_TIME) {
-            Log.d(LOG_IMAGE_LOADING_TIME, " load is failed for $imageResource $imageRequestTime")
-        } else {
-            Log.d(
-                LOG_IMAGE_LOADING_TIME,
-                "$imageResource's loading time :  $imageLoadingTime ms"
-            )
+        if (isLoadingTimeLoggingEnabled) {
+            if (_imageLoadTime == INVALID_TIME) {
+                Log.d(
+                    LOG_IMAGE_LOADING_TIME,
+                    " load is failed for $imageResource $imageRequestTime"
+                )
+            } else {
+                Log.d(
+                    LOG_IMAGE_LOADING_TIME,
+                    "$imageResource's loading time :  $imageLoadingTime ms"
+                )
+            }
         }
     }
 
