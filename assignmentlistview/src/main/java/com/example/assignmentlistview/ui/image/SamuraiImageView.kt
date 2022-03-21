@@ -22,16 +22,16 @@ class SamuraiImageView @JvmOverloads constructor(
 
     private val cacheString = DiskCacheStrategy.AUTOMATIC
 
-    private var imageLoadTime: Long? = null
+    private var _imageLoadTime: Long = INVALID_TIME
 
-    private var imageRequestTime: Long? = null
+    private var imageRequestTime: Long = INVALID_TIME
 
     private var imageResource: String? = null
 
-    var samuraiImageLoadingTime: Long?
-        get() = imageLoadTime
+    var imageLoadingTime: Long
+        get() = _imageLoadTime
         set(value) {
-            imageLoadTime = value
+            _imageLoadTime = value
 
             logImageLoadingTime()
         }
@@ -70,7 +70,7 @@ class SamuraiImageView @JvmOverloads constructor(
                     target: com.bumptech.glide.request.target.Target<Drawable>?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    samuraiImageLoadingTime = INVALID_TIME
+                    imageLoadingTime = INVALID_TIME
                     return false
                 }
 
@@ -82,7 +82,9 @@ class SamuraiImageView @JvmOverloads constructor(
                     isFirstResource: Boolean
                 ): Boolean {
                     val displayTime = System.currentTimeMillis()
-                    samuraiImageLoadingTime = displayTime - imageRequestTime!!
+                    if (dataSource == DataSource.REMOTE || dataSource == DataSource.DATA_DISK_CACHE) {
+                        imageLoadingTime = displayTime - imageRequestTime
+                    }
                     return false
                 }
 
@@ -92,14 +94,13 @@ class SamuraiImageView @JvmOverloads constructor(
     }
 
     private fun logImageLoadingTime() {
-        if (imageLoadTime == INVALID_TIME) {
+        if (_imageLoadTime == INVALID_TIME) {
             Log.d(LOG_IMAGE_LOADING_TIME, " load is failed for $imageResource $imageRequestTime")
         } else {
             Log.d(
                 LOG_IMAGE_LOADING_TIME,
-                "$imageResource's loading time :  $samuraiImageLoadingTime ms"
+                "$imageResource's loading time :  $imageLoadingTime ms"
             )
-
         }
     }
 

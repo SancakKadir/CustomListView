@@ -21,8 +21,7 @@ class MainActivity : AppCompatActivity() {
                 AssignmentList.ItemEntity("https://db62cod6cnasq.cloudfront.net/user-media/0/image1-3mb.png"),
                 AssignmentList.ItemEntity("https://db62cod6cnasq.cloudfront.net/user-media/0/image1-500kb.png"),
                 AssignmentList.ItemEntity("https://db62cod6cnasq.cloudfront.net/user-media/0/image1-1_5mb.png"),
-                AssignmentList.ItemEntity("https://db62cod6cnasq.cloudfront.net/user-media/0/image1-2mb.png"),
-
+                AssignmentList.ItemEntity("https://db62cod6cnasq.cloudfront.net/user-media/0/image1-2mb.png")
                 )
         )
     }
